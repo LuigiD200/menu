@@ -27,25 +27,44 @@ public class Menu {
         return this;
     }
 
+    ///////////////////////
     public void display() {
+        display(false);
+    }
+
+    public void display(boolean isLooped) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(title);
-        for (int i = 0; i < options.size(); i++) {
-            System.out.println((i + 1) + ") " + options.get(i).option());
-        }
+        do {
+            System.out.println(title);
+            System.out.print(isLooped ? "0) Back \n" : "");
 
+
+            for (int i = 0; i < options.size(); i++)
+                System.out.println((i + 1) + ") " + options.get(i).option());
+
+            int answer = getValidInput(isLooped ? 0 : 1, options.size());
+            if (answer == 0) break;
+            options.get(answer - 1).action().run();
+        } while (isLooped); // This is genius
+    }
+
+
+    private int getValidInput(int min, int max) {
+        Scanner scanner = new Scanner(System.in);
         int answer;
+
         do {
             System.out.print("Answer: ");
             while (!scanner.hasNextInt()) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println("Invalid input. Please enter a number between " + min + " and " + max);
                 System.out.print("Answer: ");
                 scanner.next();
             }
             answer = scanner.nextInt();
-        } while (answer < 1 || answer > options.size());
+        } while (answer < min || answer > max);
 
-        options.get(answer - 1).action().run();
+        return answer;
     }
+
 }

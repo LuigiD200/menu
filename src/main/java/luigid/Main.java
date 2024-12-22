@@ -5,22 +5,17 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        //EXAMPLE CODE
         Scanner scanner = new Scanner(System.in);
-        int num1, num2;
-        Field[] menuField = Menu.class.getDeclaredFields();
-
-        System.out.print("Enter first number: ");
-        num1 = scanner.nextInt();
-        System.out.print("Enter second number: ");
-        num2 = scanner.nextInt();
+        int num1 = 1;
+        int num2 = 2;
 
         Menu menu = new Menu().setTitle("Choose one of the following:")
                 .addOption("Sum", () -> sum(num1, num2))
                 .addOption("Difference", () -> difference(num1, num2))
                 .addOption("Product", () -> product(num1, num2))
                 .addOption("Division", () -> division(num1, num2));
-
-        menu.display();
+        menu.display(true);
     }
 
 
